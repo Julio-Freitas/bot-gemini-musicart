@@ -1,6 +1,7 @@
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 from hellṕer import load
 
@@ -8,15 +9,12 @@ KEY_GEMINI_GOOLE = os.getenv("GEMINI_API_KEY")
 MODEL_GEMINI = "gemini-1.5-flash"
 genai.configure(api_key=KEY_GEMINI_GOOLE)
 
-positive = load('dados/positive.text')
-neutro =  load('dados/neutro.text')
-negative =  load('dados/negative.text')
+positive = load("dados/positive.text")
+neutro = load("dados/neutro.text")
+negative = load("dados/negative.text")
 
-persons = {
-    'positivo': f'{positive}',
-    'neutro': f'{neutro}',
-    'negativo': f'{negative}'
-}
+persons = {"positivo": f"{positive}", "neutro": f"{neutro}", "negativo": f"{negative}"}
+
 
 def select_person(msg: str):
     prompt_system = f"""
@@ -39,10 +37,7 @@ def select_person(msg: str):
         Saída: negativo
         """
 
-    setting_module = {
-        "temperature" : 0.1,
-        "max_output_tokens" : 8192
-    }
+    setting_module = {"temperature": 0.1, "max_output_tokens": 8192}
     llm = genai.GenerativeModel(
         model_name=MODEL_GEMINI,
         system_instruction=prompt_system,
